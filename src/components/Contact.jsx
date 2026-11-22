@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import api from '../services/api.js';
 
 const Contact = () => {
@@ -7,30 +7,22 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
-  
+
   // React Form State tracking
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     message: '',
-    permission: false
+    permission: false,
   });
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  
-  // Parallax translation for the big background text
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "20%"]);
 
   // Handle input changes dynamically
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [id]: type === 'checkbox' ? checked : value
+      [id]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -61,183 +53,277 @@ const Contact = () => {
   };
 
   return (
-    <section ref={ref} id="contact" className="bg-[#0b0b0b] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 border-t border-white/10 select-none">
-      
-      {/* Background Cinematic Red Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/15 rounded-full blur-[160px] pointer-events-none z-0"></div>
+    <section
+      ref={ref}
+      id="contact"
+      className="bg-[#060608] w-full min-h-screen relative overflow-hidden flex items-center justify-center py-24 px-4 sm:px-8 border-t border-white/10 select-none"
+    >
+      {/* Background Crimson Waves & Glows (Matching 2nd Reference Image) */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Top-left crimson corner wave glow */}
+        <div className="absolute -top-24 -left-24 w-[480px] h-[480px] bg-gradient-to-br from-red-600/30 via-rose-800/15 to-transparent rounded-full blur-[100px]" />
+        {/* Bottom-right red ambient glow */}
+        <div className="absolute -bottom-24 -right-24 w-[550px] h-[550px] bg-gradient-to-tl from-red-600/30 via-rose-700/15 to-transparent rounded-full blur-[120px]" />
+        {/* Center ambient glow behind card */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[400px] bg-red-600/10 rounded-full blur-[150px]" />
 
-      {/* Huge Background Parallax Netflix Watermark Text */}
-      <motion.div 
-        style={{ y }}
-        className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12 opacity-10"
-      >
-        <h1 
-          className="text-[25vw] leading-[0.75] font-black text-red-600 uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
-          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+        {/* Decorative Curved Red Wave Lines */}
+        <svg
+          className="absolute inset-0 w-full h-full opacity-45"
+          viewBox="0 0 1440 900"
+          fill="none"
+          preserveAspectRatio="none"
         >
-          CONTACT
-        </h1>
-      </motion.div>
+          <path
+            d="M0 320 C 180 220, 320 90, 520 0 L 0 0 Z"
+            fill="url(#topLeftRibbon)"
+          />
+          <path
+            d="M0 330 C 190 230, 330 100, 540 0"
+            stroke="url(#redStroke)"
+            strokeWidth="2"
+          />
+          <path
+            d="M920 900 C 1100 800, 1270 720, 1440 660 L 1440 900 Z"
+            fill="url(#bottomRightRibbon)"
+          />
+          <defs>
+            <linearGradient id="topLeftRibbon" x1="0" y1="0" x2="520" y2="320" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#E50914" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#120204" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="bottomRightRibbon" x1="920" y1="900" x2="1440" y2="660" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#120204" stopOpacity="0" />
+              <stop offset="100%" stopColor="#E50914" stopOpacity="0.28" />
+            </linearGradient>
+            <linearGradient id="redStroke" x1="0" y1="330" x2="540" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#E50914" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#E50914" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
 
-      {/* Form Card Overlay */}
-      <div className="relative z-10 w-full flex justify-end items-end">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
+      {/* Main Centered Contact Card (Matching 2nd Image) */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-[#141414]/95 backdrop-blur-2xl border-t border-l border-white/15 w-full md:w-[90%] lg:w-[82%] p-8 md:p-16 text-white flex flex-col justify-between rounded-tl-[3rem] shadow-[0_-25px_60px_rgba(0,0,0,0.9)] relative overflow-hidden"
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="relative w-full rounded-[2rem] bg-[#0e0e11]/95 backdrop-blur-2xl border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.95),0_0_50px_rgba(229,9,20,0.12)] p-7 sm:p-10 md:p-14 text-white overflow-hidden"
         >
-          {/* Subtle internal top crimson highlight glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-90"></div>
+          {/* Top Center Red Neon Rim Highlight */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-[2px] bg-gradient-to-r from-transparent via-red-500 to-transparent shadow-[0_0_20px_#E50914]" />
+          {/* Bottom Red Neon Rim Highlight */}
+          <div className="absolute bottom-0 inset-x-12 h-[1.5px] bg-gradient-to-r from-transparent via-red-600/70 to-transparent shadow-[0_0_25px_#E50914]" />
+          {/* Left & Right subtle red edge glow */}
+          <div className="absolute inset-y-10 left-0 w-[1.5px] bg-gradient-to-b from-transparent via-red-600/50 to-transparent" />
+          <div className="absolute inset-y-10 right-0 w-[1.5px] bg-gradient-to-b from-transparent via-red-600/50 to-transparent" />
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded bg-red-600/10 border border-red-600/30 text-xs font-mono uppercase tracking-widest text-red-500">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span>
-              <span>EPISODE 04 // GET IN TOUCH</span>
+          {/* Top Bar: Get In Touch Pill + Copy Email Address + Green Active Status */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7">
+            {/* Left Pill: Get In Touch */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-red-950/60 border border-red-500/30 w-fit">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444]" />
+              <span className="text-xs font-semibold text-red-400 tracking-wide">Get In Touch</span>
             </div>
-            <div className="flex items-center gap-3">
+
+            {/* Right Controls: Copy Email Pill + Divider + Green Dot TRANSMISSION LINE ACTIVE */}
+            <div className="flex flex-wrap items-center gap-3.5">
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="text-xs font-mono text-white/70 hover:text-white bg-white/5 border border-white/10 px-3 py-1.5 rounded hover:border-red-600/50 transition-all flex items-center gap-2"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-red-500/50 text-xs text-white/80 hover:text-white transition-all cursor-pointer"
               >
+                <svg className="w-3.5 h-3.5 text-white/70" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                </svg>
                 <span>{copied ? '✓ Copied!' : 'Copy Email Address'}</span>
               </button>
-              <span className="text-xs font-mono text-white/40 tracking-wider hidden md:block">
-                // TRANSMISSION LINE ACTIVE
-              </span>
+
+              <span className="hidden sm:inline-block h-4 w-[1px] bg-white/15" />
+
+              <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-white/70">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]" />
+                <span>TRANSMISSION LINE ACTIVE</span>
+              </div>
             </div>
           </div>
 
+          {/* Heading & Subtitle */}
+          <div className="space-y-2 mb-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              Contact <span className="text-red-600 drop-shadow-[0_0_25px_rgba(229,9,20,0.45)]">Us</span>
+            </h2>
+            <p className="text-sm sm:text-base text-white/70 font-normal">
+              We&apos;d love to hear from you. Send us a message and we&apos;ll get back to you soon.
+            </p>
+          </div>
+
           {submitted ? (
-            <div className="py-16 text-center flex flex-col items-center justify-center space-y-6">
-              <div className="w-16 h-16 rounded-full bg-red-600/20 border border-red-600 flex items-center justify-center text-red-500 text-3xl animate-bounce">
+            <div className="py-14 text-center flex flex-col items-center justify-center space-y-5">
+              <div className="w-16 h-16 rounded-full bg-red-600/20 border border-red-500 flex items-center justify-center text-red-500 text-3xl animate-bounce shadow-[0_0_25px_rgba(229,9,20,0.4)]">
                 ✓
               </div>
               <div className="space-y-2">
-                <h3 className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                  TRANSMISSION RECEIVED
+                <h3 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+                  Message Sent Successfully!
                 </h3>
                 <p className="text-sm md:text-base text-white/70 max-w-md mx-auto">
-                  Thank you for reaching out! Your dispatch has been logged. I'll get back to you shortly.
+                  Thank you for reaching out! Your message has been saved. I&apos;ll get back to you shortly.
                 </p>
               </div>
               <button
                 onClick={() => setSubmitted(false)}
-                className="px-6 py-2.5 rounded bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono uppercase tracking-widest transition-all"
+                className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
               >
                 Send Another Message
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-12 md:gap-16 w-full">
-              <div className="flex flex-col md:flex-row gap-12 md:gap-20 w-full">
+            <form onSubmit={handleSubmit} className="space-y-7">
+              {/* Two-Column Input Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
                 
-                {/* Left Column */}
-                <div className="flex-1 flex flex-col gap-10">
-                  <div className="relative">
-                    <input 
-                      type="text" 
-                      id="firstName" 
+                {/* Left Column: 3 Stacked Rounded Input Boxes with Icons */}
+                <div className="md:col-span-6 flex flex-col gap-4">
+                  {/* First Name */}
+                  <div className="relative flex items-center">
+                    <span className="absolute left-4 text-white/45 pointer-events-none">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </span>
+                    <input
+                      type="text"
+                      id="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      placeholder="First Name" 
+                      placeholder="First Name"
                       required
-                      className="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
+                      className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-red-500/70 focus:bg-white/[0.05] text-sm text-white placeholder-white/45 focus:outline-none transition-all"
                     />
                   </div>
-                  <div className="relative">
-                    <input 
-                      type="text" 
-                      id="lastName" 
+
+                  {/* Last Name */}
+                  <div className="relative flex items-center">
+                    <span className="absolute left-4 text-white/45 pointer-events-none">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </span>
+                    <input
+                      type="text"
+                      id="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      placeholder="Last Name" 
+                      placeholder="Last Name"
                       required
-                      className="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
+                      className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-red-500/70 focus:bg-white/[0.05] text-sm text-white placeholder-white/45 focus:outline-none transition-all"
                     />
                   </div>
-                  <div className="relative">
-                    <input 
-                      type="email" 
-                      id="email" 
+
+                  {/* Email Address */}
+                  <div className="relative flex items-center">
+                    <span className="absolute left-4 text-white/45 pointer-events-none">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                      </svg>
+                    </span>
+                    <input
+                      type="email"
+                      id="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Email Address" 
+                      placeholder="Email Address"
                       required
-                      className="w-full bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium rounded-none text-white"
+                      className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-red-500/70 focus:bg-white/[0.05] text-sm text-white placeholder-white/45 focus:outline-none transition-all"
                     />
                   </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="flex-1 flex flex-col">
-                  <div className="relative h-full flex flex-col">
-                    <textarea 
-                      id="message" 
+                {/* Right Column: Large Rounded Textarea Box with Chat Icon */}
+                <div className="md:col-span-6 flex">
+                  <div className="relative w-full flex">
+                    <span className="absolute left-4 top-4 text-white/45 pointer-events-none">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                    </span>
+                    <textarea
+                      id="message"
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Type your message here..." 
+                      placeholder="Type your message here..."
                       required
-                      className="w-full h-full min-h-[140px] bg-transparent border-b border-white/20 pb-3 text-lg focus:outline-none focus:border-red-600 transition-colors placeholder-white/40 font-medium resize-none rounded-none text-white"
-                    ></textarea>
+                      className="w-full h-full min-h-[168px] pl-11 pr-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-red-500/70 focus:bg-white/[0.05] text-sm text-white placeholder-white/45 focus:outline-none resize-y transition-all"
+                    />
                   </div>
                 </div>
               </div>
 
-              {/* Bottom Section */}
-              <div className="flex flex-col md:flex-row gap-12 mt-4 pt-6 border-t border-white/10">
-                {/* Left text */}
-                <div className="flex-1 flex items-start gap-4 text-sm font-light text-white/70">
-                  <input 
-                    type="checkbox" 
-                    id="permission" 
+              {/* Bottom Row: Permission Checkbox + Privacy Shield + Red Glowing Pill Submit Button */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-2">
+                {/* Left: Checkbox */}
+                <div className="flex items-start gap-3.5 text-xs sm:text-sm text-white/75">
+                  <input
+                    type="checkbox"
+                    id="permission"
                     checked={formData.permission}
                     onChange={handleChange}
                     required
-                    className="mt-1 w-4 h-4 rounded-sm border-white/30 bg-transparent text-red-600 focus:ring-0 focus:ring-offset-0 cursor-pointer" 
-                    style={{ accentColor: "#E50914" }}
+                    className="mt-0.5 w-4 h-4 rounded border-white/30 bg-transparent text-red-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                    style={{ accentColor: '#E50914' }}
                   />
-                  <label htmlFor="permission" className="cursor-pointer max-w-[280px] leading-snug">
+                  <label htmlFor="permission" className="cursor-pointer max-w-[260px] leading-snug">
                     I give permission to contact me at this email address.
                   </label>
                 </div>
 
-                {/* Right text & button */}
-                <div className="flex-1 flex flex-col gap-8 text-xs text-white/50 font-light">
-                  <p className="leading-relaxed max-w-[400px]">
-                    This transmission is protected by standard privacy guidelines.
-                  </p>
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
-                    <p className="max-w-[250px] leading-relaxed">
-                      Ready to start a project or collaboration? Send a direct signal.
-                    </p>
-                    
-                    <button 
-                      type="submit" 
-                      disabled={isSubmitting}
-                      className="px-8 py-3.5 rounded bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 transition-all duration-300 group whitespace-nowrap shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:scale-105 active:scale-95 cursor-pointer"
-                    >
-                      {isSubmitting ? 'Transmitting...' : 'Send Message'}
-                      <svg className={`w-4 h-4 transform ${isSubmitting ? 'animate-spin' : 'group-hover:translate-x-1'} transition-transform`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {isSubmitting ? (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        ) : (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        )}
-                      </svg>
-                    </button>
+                {/* Right: Privacy Shield Info + Send Message Pill Button */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between md:justify-end gap-5 flex-1">
+                  <div className="flex items-center gap-2.5 text-xs text-white/55">
+                    <svg className="w-5 h-5 text-white/50 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    <span className="max-w-[210px] leading-relaxed">
+                      Your information is protected by standard privacy guidelines.
+                    </span>
                   </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 disabled:opacity-50 text-white font-bold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2.5 transition-all duration-300 group whitespace-nowrap shadow-[0_0_30px_rgba(229,9,20,0.65)] hover:shadow-[0_0_40px_rgba(229,9,20,0.95)] hover:scale-105 active:scale-95 cursor-pointer"
+                  >
+                    <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                    <svg
+                      className={`w-4 h-4 transform ${
+                        isSubmitting ? 'animate-spin' : 'group-hover:translate-x-1'
+                      } transition-transform`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.3"
+                      viewBox="0 0 24 24"
+                    >
+                      {isSubmitting ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      ) : (
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      )}
+                    </svg>
+                  </button>
                 </div>
               </div>
             </form>
           )}
-
         </motion.div>
       </div>
     </section>
   );
 };
 
-export default Contact;
+export default Contact;

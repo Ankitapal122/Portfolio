@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import developerImg from '../assets/Portfolio/image.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -80,9 +79,9 @@ const About = () => {
             <span className="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
             <span className="text-red-500 font-bold">EPISODE 01</span>
             <span className="text-white/40">|</span>
-            <span>ABOUT THE Grauduate</span>
+            <span>ABOUT THE GRADUATE</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">
             EPISODE SYNOPSIS <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_30px_rgba(229,9,20,0.4)]">
               ORIGIN & VISION.
@@ -111,14 +110,9 @@ const About = () => {
             </div>
             
             <div className="space-y-5 relative z-10">
-              <div className="flex items-center gap-4">
-                <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-red-600/50 shadow-[0_0_20px_rgba(229,9,20,0.35)] shrink-0 bg-gradient-to-b from-[#200507] via-[#100304] to-black">
-                  <img src={developerImg} alt="Ankita Pal" className="w-full h-full object-cover object-top filter contrast-110" />
-                </div>
-                <div>
-                  <h3 className="text-xs font-mono uppercase tracking-widest text-red-500 font-bold">Cast & Background</h3>
-                  <p className="text-[11px] text-white/50 font-mono tracking-wider">// B.SC. COMPUTER SCIENCE</p>
-                </div>
+              <div>
+                <h3 className="text-xs font-mono uppercase tracking-widest text-red-500 font-bold">Cast & Background</h3>
+                <p className="text-[11px] text-white/50 font-mono tracking-wider">// B.SC. COMPUTER SCIENCE</p>
               </div>
               <p className="text-lg md:text-xl font-medium text-white/90 leading-relaxed">
                 I am <span className="text-white font-bold drop-shadow">Ankita Pal</span>, a graduate with a <strong className="text-white font-bold">B.Sc. in Computer Science</strong> dedicated to building high-impact software solutions.
@@ -193,11 +187,27 @@ const About = () => {
               <p className="text-base md:text-lg font-semibold text-white">Equipped with industry-grade instruments for robust scaling.</p>
             </div>
             
-            <div className="flex flex-wrap items-center gap-3 relative z-10">
-              {['React', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Docker', 'JavaScript'].map((tech, idx) => (
+            <div className="flex flex-wrap items-center gap-2.5 md:max-w-2xl relative z-10">
+              {[
+                'HTML5',
+                'CSS3',
+                'JavaScript',
+                'React.js',
+                'Tailwind CSS',
+                'Node.js',
+                'Express.js',
+                'REST APIs',
+                'MongoDB',
+                'SQL',
+                'PostgreSQL',
+                'SQLite',
+                'Git & GitHub',
+                'Docker',
+                'CI/CD & Deployment'
+              ].map((tech, idx) => (
                 <span
                   key={idx}
-                  className="px-4 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white shadow-inner hover:bg-red-600/20 hover:border-red-600/40 hover:scale-105 transition-all"
+                  className="px-3.5 py-2 rounded bg-white/[0.04] border border-white/10 text-xs font-mono uppercase tracking-wider text-white shadow-inner hover:bg-red-600/20 hover:border-red-600/40 hover:scale-105 transition-all"
                 >
                   {tech}
                 </span>

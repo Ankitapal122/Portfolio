@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import pictureImg from '../assets/Portfolio/picture.png';
 
 const Hero = () => {
   const sectionRef = useRef(null);
-  const cardRef = useRef(null);
-  const glareRef = useRef(null);
   const spotlightRef = useRef(null);
   const contentRef = useRef(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,9 +25,8 @@ const Hero = () => {
 
   useEffect(() => {
     const section = sectionRef.current;
-    const card = cardRef.current;
     const content = contentRef.current;
-    if (!section || !card || !content) return;
+    if (!section || !content) return;
 
     // --- GSAP CINEMATIC ENTRANCE ANIMATION ---
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
@@ -45,19 +41,7 @@ const Hero = () => {
       { y: 40, opacity: 0, filter: "blur(10px)" },
       { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.1, stagger: 0.1 },
       "-=0.7"
-    )
-    .fromTo(
-      card,
-      { scale: 0.75, opacity: 0, rotationY: 35, rotationX: -15 },
-      { scale: 1, opacity: 1, rotationY: 0, rotationX: 0, duration: 1.4, ease: "back.out(1.2)" },
-      "-=0.9"
     );
-
-    // --- 3D PERSPECTIVE & SPECULAR TILT TRACKING ---
-    const xTilt = gsap.quickTo(card, "rotationY", { duration: 0.4, ease: "power3.out" });
-    const yTilt = gsap.quickTo(card, "rotationX", { duration: 0.4, ease: "power3.out" });
-    const glareX = gsap.quickTo(glareRef.current, "x", { duration: 0.3, ease: "power2.out" });
-    const glareY = gsap.quickTo(glareRef.current, "y", { duration: 0.3, ease: "power2.out" });
 
     const handleMouseMove = (e) => {
       const rect = section.getBoundingClientRect();
@@ -68,21 +52,6 @@ const Hero = () => {
       if (spotlightRef.current) {
         spotlightRef.current.style.transform = `translate3d(${x - 300}px, ${y - 300}px, 0)`;
       }
-
-      // Card 3D Perspective Calculations
-      const cardRect = card.getBoundingClientRect();
-      const cardCenterX = cardRect.left + cardRect.width / 2 - rect.left;
-      const cardCenterY = cardRect.top + cardRect.height / 2 - rect.top;
-
-      const rotateX = -((y - cardCenterY) / (cardRect.height / 2)) * 14;
-      const rotateY = ((x - cardCenterX) / (cardRect.width / 2)) * 14;
-
-      xTilt(rotateY);
-      yTilt(rotateX);
-
-      // Holographic Glare mapping
-      glareX((x - cardRect.left) - cardRect.width / 2);
-      glareY((y - cardRect.top) - cardRect.height / 2);
     };
 
     const handleMouseEnter = () => {
@@ -91,8 +60,6 @@ const Hero = () => {
 
     const handleMouseLeave = () => {
       if (spotlightRef.current) gsap.to(spotlightRef.current, { opacity: 0, duration: 0.3 });
-      xTilt(0);
-      yTilt(0);
     };
 
     section.addEventListener("mousemove", handleMouseMove);
@@ -129,7 +96,7 @@ const Hero = () => {
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden opacity-10">
           <div className="flex whitespace-nowrap animate-marquee">
             {[...developerRoles, ...developerRoles].map((role, idx) => (
-              <span key={idx} className="text-[14vw] font-black text-red-600 mx-8 uppercase tracking-tighter" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+              <span key={idx} className="text-[11vw] font-black text-red-600 mx-8 uppercase tracking-normal">
                 {role} &bull;
               </span>
             ))}
@@ -148,7 +115,7 @@ const Hero = () => {
 
       {/* --- NETFLIX-THEMED DEVELOPER NAVBAR --- */}
       <header className="relative z-50 w-full max-w-7xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between pointer-events-auto">
-        <a href="#home" className="text-2xl md:text-3xl font-black text-red-600 tracking-tighter flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(229,9,20,0.9)]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+        <a href="#home" className="text-2xl md:text-3xl font-extrabold text-red-600 tracking-wide flex items-center gap-2 drop-shadow-[0_2px_15px_rgba(229,9,20,0.9)]">
           ANKITA<span className="w-2 h-2 rounded-full bg-white inline-block"></span>
         </a>
 
@@ -238,17 +205,17 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-10 my-auto">
           
           {/* Left Side: Developer Story & Description */}
-          <div className="lg:col-span-5 flex flex-col items-start space-y-5 text-left">
+          <div className="lg:col-span-8 flex flex-col items-start space-y-5 text-left">
             
             <div className="hero-anim-item flex items-center gap-3">
               <span className="px-2.5 py-0.5 bg-red-600 text-white font-black text-xs rounded tracking-widest shadow-[0_0_20px_rgba(229,9,20,0.8)] animate-pulse">TOP 1%</span>
               <span className="text-white/80 text-xs font-mono tracking-widest uppercase">Software Engineer & Problem Solver</span>
             </div>
 
-            <h1 className="hero-anim-item text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[0.9] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              ANKITA <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_35px_rgba(220,38,38,0.5)]">
-                DEV.ENGINE
+            <h1 className="hero-anim-item text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.1] drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">
+              ANKITA PAL <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-500 to-red-600 drop-shadow-[0_0_35px_rgba(220,38,38,0.5)]">
+                FULL STACK DEVELOPER
               </span>
             </h1>
 
@@ -260,7 +227,7 @@ const Hero = () => {
               <span className="text-white/70">Docker & Cloud</span>
             </div>
 
-            <p className="hero-anim-item text-sm md:text-base text-white/80 font-light leading-relaxed max-w-md drop-shadow">
+            <p className="hero-anim-item text-sm md:text-base text-white/80 font-light leading-relaxed max-w-xl drop-shadow">
               B.Sc. in Computer Science graduate architecting robust full-stack applications, scalable backend systems, and high-performance user experiences.
             </p>
 
@@ -289,50 +256,8 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Center: Interactive 3D Holographic Tilt Developer Poster Frame */}
-          <div className="lg:col-span-4 flex justify-center perspective-[1200px]">
-            <div 
-              ref={cardRef}
-              className="relative group transform-gpu transition-transform duration-100 ease-out will-change-transform"
-            >
-              {/* Cinematic Red Neon Back Glow */}
-              <div className="absolute -inset-3 bg-gradient-to-r from-red-600/70 via-rose-600/40 to-purple-600/20 rounded-3xl blur-3xl opacity-90 group-hover:opacity-100 animate-pulse duration-1000"></div>
-              
-              {/* Poster Card with Glossy Sheen */}
-              <div className="relative w-[280px] md:w-[320px] p-3.5 bg-[#141414]/90 backdrop-blur-2xl rounded-2xl border border-red-600/40 shadow-[0_40px_80px_rgba(0,0,0,0.95)] overflow-hidden">
-                
-                {/* Dynamic Specular Glare Layer */}
-                <div 
-                  ref={glareRef}
-                  className="absolute inset-[-50%] w-[200%] h-[200%] bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none transform-gpu z-40"
-                ></div>
-
-                {/* Netflix Series Tag */}
-                <div className="absolute top-6 left-6 z-30 px-3 py-1 bg-red-600 text-white font-mono text-[10px] font-bold tracking-widest rounded shadow-xl">
-                  FEATURED DEV
-                </div>
-
-                <div className="relative w-full h-[330px] md:h-[390px] rounded-xl overflow-hidden bg-gradient-to-b from-[#200507] via-[#120204] to-black flex items-end justify-center">
-                  <img
-                    src={pictureImg}
-                    alt="Ankita Pal"
-                    className="w-full h-full object-cover object-top filter contrast-110 brightness-100 group-hover:scale-105 transition-transform duration-500"
-                  />
-                  {/* Subtle vignette gradient over bottom of image */}
-                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none"></div>
-                  
-                  {/* Name banner at bottom of poster */}
-                  <div className="absolute bottom-3 left-3 right-3 z-30 px-3 py-1.5 rounded bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between">
-                    <span className="text-[11px] font-mono font-bold text-white tracking-wider">ANKITA PAL</span>
-                    <span className="text-[9px] font-mono text-red-500 font-bold uppercase">B.SC CS & FULL-STACK</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Right Side: Technical Specs & Stack */}
-          <div className="hero-anim-item lg:col-span-3 flex flex-col items-start lg:items-end space-y-4 text-left lg:text-right">
+          <div className="hero-anim-item lg:col-span-4 flex flex-col items-start lg:items-end space-y-4 text-left lg:text-right">
             <div className="p-5 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-xl shadow-2xl max-w-xs">
               <h3 className="text-xs font-mono uppercase tracking-widest text-red-500 font-bold mb-3">Core Profiles & Links</h3>
               <div className="space-y-2">
@@ -344,6 +269,15 @@ const Hero = () => {
                 >
                   <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
                   github.com/Ankitapal122
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/ankita-dharmraj-pal-411892341"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-xs text-white/80 hover:text-red-400 transition-colors font-mono"
+                >
+                  <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  linkedin.com/in/ankita-dharmraj-pal
                 </a>
                 <p className="text-xs text-white/60 leading-relaxed font-light pt-1">
                   B.Sc. Computer Science &bull; Full-Stack Engineer &bull; Open Source Contributor.
@@ -364,4 +298,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Hero;

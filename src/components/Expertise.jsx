@@ -109,9 +109,9 @@ const Expertise = () => {
               <span className="text-white/40">|</span>
               <span>CORE COMPETENCIES</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-              DIRECTOR'S CUT <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-600 to-red-700 drop-shadow-[0_0_25px_rgba(229,9,20,0.35)]">
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+              FULL STACK EXPERTISE <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-500 to-red-600 drop-shadow-[0_0_25px_rgba(229,9,20,0.35)]">
                 TECHNICAL CAPABILITIES.
               </span>
             </h2>
