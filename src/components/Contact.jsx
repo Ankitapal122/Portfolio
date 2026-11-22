@@ -26,7 +26,7 @@ const Contact = () => {
     }));
   };
 
-  // Handle form submission logic connected to SQLite Database
+  // Handle form submission logic connected to Email (FormSubmit) + SQLite Database
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,9 +36,28 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      await api.submitMessage(formData);
+      // 1. Send direct email notification to palankita450000@gmail.com (works on GitHub Pages live site)
+      const emailPromise = fetch('https://formsubmit.co/ajax/palankita450000@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Portfolio Message from ${formData.firstName} ${formData.lastName}`,
+          _template: 'table',
+        }),
+      });
+
+      // 2. Also save to local SQLite backend if running locally
+      const dbPromise = api.submitMessage(formData);
+
+      await Promise.allSettled([emailPromise, dbPromise]);
     } catch (err) {
-      console.warn('API error:', err);
+      console.warn('Submission warning:', err);
     } finally {
       setIsSubmitting(false);
       setSubmitted(true);
@@ -47,7 +66,7 @@ const Contact = () => {
   };
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('ankitapal.dev@gmail.com');
+    navigator.clipboard.writeText('palankita450000@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   };
